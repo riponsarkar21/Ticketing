@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Ticket</title>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <link rel="stylesheet" href="static\css\style.css">
+</head>
+
+
+<body>
+    <header>
+        {% include 'version.html' %}  
+
+        <a href="/" class="header-title">Ticket System</a>
+
+        <div class="success-message">
+            {% if success %}
+                <p style="color: green;">{{ success }}</p>
+            {% endif %}
+        </div>
+        <div class="data-search-form">
+            <h2>
+                Search Ticket
+            </h2>
+            <!-- <form method="POST" action="/search_ticket">
+                <label>Ticket Number :</label>
+                <input type="number" name="ticket_number">
+                <button type="submit">Search</button>
+            </form> -->
+
+
+            <!-- optional detail code replacing by using a single line of code -->
+            {% include 'search-form.html' %}  
+
+
+            <!-- <a href="/search">Search Ticket</a> -->
+            <!-- <a href="/ticket">Search Ticket</a> -->
+
+        </div>
+    </header>
+
+        <section>
+
+
+        <div class="data-input">
+
+            <div class="data-input-form-1">
+                <form method="POST" action="/save_ticket">
+                    <label>Date:</label>
+                    <input type="date" name="date" class="date-picker" value="{{ datetime.datetime.now().strftime('%Y-%m-%d') }}" required><br>
+
+                    <label>Time:</label>
+                    <input type="time" name="time" class="time-picker" value="{{ datetime.datetime.now().strftime('%H:%M') }}" required><br>
+        
+                    <label>Customer Name:</label>
+                    <input type="text" name="customer_name" required><br>
+        
+                    <label>Address:</label>
+                    <input type="text" name="address" required><br>
+        
+                    <label>Relation:</label>
+                    <input type="text" name="relation" required><br>
+        
+                    <label>Phone Number:</label>
+                    <input type="text" name="phone_number" required><br>
+        
+                    <label>Amount:</label>
+                    <input type="number" name="amount" required><br>
+        
+                    <label>Receiver:</label>
+                    <input type="text" name="receiver" required><br>
+        
+                    <button type="submit" class="save-ticket">Save Ticket</button>
+                </form>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="ticket-search-and-container">
+            <!-- <a href="/">Ticket System</a>
+
+            <h1>Search for a Ticket</h1>
+            <form method="POST" action="/search_ticket">
+                <label for="ticket_number">Enter Ticket Number:</label>
+                <input type="text" id="ticket_number" name="ticket_number" required>
+                <button type="submit">Search</button>
+            </form>
+
+            <hr> -->
+
+
+            {% if ticket_data is not none and not ticket_data.empty %}
+            <!-- Display the ticket details -->
+            <div class="ticket-view">
+                <div class="ticket-heading-part">
+                    <div class="event-details">
+                        <div class="event-titles">
+                            <h1 class="event-titles-heading">Rajashree<span>_</span>Sarkar</h1>
+                            <h2 class="event-party-heading">Birth Ceremony</h2>
+                            <h3 class="event-address-heading">Birampur, Jessore</h3>
+                        </div>
+                        <div class="qr-code">
+                            <img src="static/qr-code/qr code sample.png" alt="QR Code" class="qr-code">
+                        </div>
+                    </div>
+
+                    <div class="ticket-num-date">
+                        <div class="ticket-number">Ticket Number: {{ ticket_data.iloc[0]['Ticket Number'] }}</div>
+                        <div class="ticket-date">Date : {{ ticket_data.iloc[0]['Date'] }}</div>
+                    </div>
+                </div>
+
+                <div class="ticket-body-part">
+                    <div class="ticket-info">
+                        <div class="label">
+                            <ul>
+                                <li>Customer Name - </li>
+                                <li>Address - </li>
+                                <li>Relation - </li>
+                                <li>Phone Number - </li>
+                                <li>Gift Amount - </li>
+                            </ul>
+                        </div>
+
+                        <div class="generated-info">
+                            <ul>
+                                <li>{{ ticket_data.iloc[0]['Customer Name'] }}</li>
+                                <li>{{ ticket_data.iloc[0]['Address'] }}</li>
+                                <li>{{ ticket_data.iloc[0]['Relation'] }}</li>
+                                <li>{{ ticket_data.iloc[0]['Phone Number'] }}</li>
+                                <li>{{ ticket_data.iloc[0]['Amount'] }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="receiving">Receive By : {{ ticket_data.iloc[0]['Receiver'] }}</div>
+            </div>
+            {% else %}
+                <p>No ticket found with the given number.</p>
+            {% endif %}
+        </div>
+
+    </section>
+
+
+
+
+
+</body>
+</html>

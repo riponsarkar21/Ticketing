@@ -1,0 +1,265 @@
+{% extends 'index.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+
+
+    <div class="ui container">
+        <h2 class="ui header">Production Dashboard</h2>
+        <form class="ui form" id="dashboardForm">
+            <div class="field">
+                <label>From Date:</label>
+                <input type="date" name="from_date" required>
+            </div>
+            <div class="field">
+                <label>To Date:</label>
+                <input type="date" name="to_date" required>
+            </div>
+            <div class="field">
+                <label>Shift:</label>
+                <select name="shift" required>
+                    <option value="ALL">A+B+C</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                </select>
+            </div>
+            <div class="field">
+                <label>Unit:</label>
+                <select name="unit" required>
+                    <option value="ALL">1+2</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                </select>
+            </div>
+            <div class="field">
+                <label>Brand:</label>
+                <select name="brand" required>
+                    <option value="ALL">ALL</option>
+                    <option value="BM (2 Ply)">BM (2 Ply)</option>
+                    <option value="AM (2 Ply)">AM (2 Ply)</option>
+                    <option value="AM (1 Ply)">AM (1 Ply)</option>
+                    <option value="AM (MES)">AM (MES)</option>
+                    <option value="Gold (2 PLY)">Gold (2 PLY)</option>
+                    <option value="Gold (1 PLY)">Gold (1 PLY)</option>
+                    <option value="Gold (1 Ply MES)">Gold (1 Ply MES)</option>
+                    <option value="AAA">AAA</option>
+                </select>
+            </div>
+            <div class="button-container">
+                <!-- <button class="ui brown button">Copy Data</button> -->
+                <button id="syncDataButton" class="ui brown button" type="button">Synchronize Data</button>
+                <button class="hidden-button" onclick="deleteProgressFile()">Delete progress.txt</button>
+                <button type="submit" class="ui button primary">Submit</button>
+            </div>
+        </form>
+
+        <h3 id="productionResult"></h3>
+
+        <div class="container-progress-bar">
+            <h3>Synchronizing Database Progress</h3>
+            <div class="progress">
+                <div id="progress-bar" class="progress-bar progress-bar-striped" role="progressbar" 
+                     style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+            </div>
+        </div>
+    </div>
+      <!-- ------------------------------------- -->
+
+      <a href="/production_report">
+        <i class='bx bxs-file-doc icon'></i>
+        <span class="text">Production Report</span> 
+      </a>
+
+
+
+
+      <!-- ------------------------------------------ -->
+    
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+   
+    <!-- <script>
+        $(document).ready(function() {
+            // Handle the form submission for "Submit" button
+            $('#dashboardForm').on('submit', function(event) {
+                event.preventDefault();
+                $.ajax({
+                    url: '/production_report',
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        $('#productionResult').text('Production: ' + response.production);
+                        location.reload();
+                    },
+                    error: function(err) {
+                        $('#productionResult').text('Error fetching production data.');
+                    }
+                });
+            });
+    
+            // Handle "Sync Data" button click
+            $('#syncDataButton').on('click', function() {
+                    // Show confirmation dialog
+                    const confirmSync = confirm("Are you sure you want to synchronize the database?");
+
+            // If user confirms, proceed with AJAX request
+            const   progressBar = body.querySelector(".container-progress-bar")
+            const   deleteProgressbar = body.querySelector(".hidden-button")
+            
+
+            if (confirmSync) {
+                progressBar.classList.add("show");
+
+                $.ajax({
+                    url: '/sync_data',
+                    type: 'POST',
+                    data: $('#dashboardForm').serialize(),
+                    success: function(response) {
+                        alert('Data synchronized successfully!');
+
+                        progressBar.classList.remove("show");
+                        deleteProgressbar.click();
+
+                    },
+                    error: function(err) {
+                        alert('Error synchronizing data.');
+                    }
+                });
+                deleteProgressFile.click();
+
+            }    
+        });
+    });      
+                    
+             
+
+    </script>
+
+    <script>
+        function updateProgressBar() {
+            $.getJSON('/progress', function(data) {
+                let progressValue = data.progress;
+                if (progressValue > 0) {
+                    $("#progress-bar").css("width", progressValue + "%")
+                                    .attr("aria-valuenow", progressValue)
+                                    .text(progressValue.toFixed(0) + "%");
+                }
+            });
+        }
+
+        // Update progress bar every 500 milliseconds
+        setInterval(updateProgressBar, 500);
+
+    </script>
+
+    <script>
+        function deleteProgressFile() {
+            $.ajax({
+                url: '/delete_progress',
+                type: 'POST',
+                success: function(response) {
+                    if (response.success) {
+                        // alert(response.message);
+                    } else {
+                        alert("Failed to delete file: " + response.message);
+                    }
+                },
+                error: function(err) {
+                    alert('Error deleting progress.txt.');
+                }
+            });
+        }
+
+    </script> -->
+
+
+    <script>
+        $(document).ready(function() {
+            // Handle the form submission for "Submit" button
+            $('#dashboardForm').on('submit', function(event) {
+                event.preventDefault();
+                $.ajax({
+                    url: '/production_report',
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        $('#productionResult').text('Production: ' + response.production);
+                    },
+                    error: function(err) {
+                        $('#productionResult').text('Error fetching production data.');
+                    }
+                });
+            });
+    
+            // Handle "Sync Data" button click
+            $('#syncDataButton').on('click', function() {
+                // Show confirmation dialog
+                const confirmSync = confirm("Are you sure you want to synchronize the database?");
+                const progressBar = document.querySelector(".container-progress-bar");
+                const deleteProgressbar = document.querySelector(".hidden-button");
+    
+                if (confirmSync) {
+                    progressBar.classList.add("show");
+    
+                    $.ajax({
+                        url: '/sync_data',
+                        type: 'POST',
+                        data: $('#dashboardForm').serialize(),
+                        success: function(response) {
+                            alert('Data synchronized successfully!');
+                            progressBar.classList.remove("show");
+                            deleteProgressbar.click();
+                            
+                            // Refresh the page after sync completion
+                            location.reload();
+                        },
+                        error: function(err) {
+                            alert('Error synchronizing data.');
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+    
+    <script>
+        function updateProgressBar() {
+            $.getJSON('/progress', function(data) {
+                let progressValue = data.progress;
+                if (progressValue > 0) {
+                    $("#progress-bar").css("width", progressValue + "%")
+                                    .attr("aria-valuenow", progressValue)
+                                    .text(progressValue.toFixed(0) + "%");
+                }
+            });
+        }
+    
+        // Update progress bar every 500 milliseconds
+        setInterval(updateProgressBar, 500);
+    </script>
+    
+    <script>
+        function deleteProgressFile() {
+            $.ajax({
+                url: '/delete_progress',
+                type: 'POST',
+                success: function(response) {
+                    if (response.success) {
+                        // alert(response.message);
+                    } else {
+                        alert("Failed to delete file: " + response.message);
+                    }
+                },
+                error: function(err) {
+                    alert('Error deleting progress.txt.');
+                }
+            });
+        }
+    </script>
+
+{% endblock %}

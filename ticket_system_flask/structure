@@ -1,0 +1,9 @@
+/bus_ticket_system
+    /templates
+        index.html
+        summary_report.html
+        detailed_report.html
+    /static
+        qr_codes (folder to store QR code images)
+    app.py
+    tickets.xlsx (your Excel file)

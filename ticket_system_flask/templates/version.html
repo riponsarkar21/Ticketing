@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Version Information</title>
+    <link rel="stylesheet" href="static/css/style.css"> <!-- Optional CSS -->
+</head>
+<body>
+    <h1>Application Version History</h1>
+
+    {% if versions %}
+        <ul>
+        {% for version in versions %}
+            <li>
+                <h2>{{ version.version }}</h2>
+                <p>{{ version.description }}</p>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No version information found.</p>
+    {% endif %}
+</body>
+</html>
