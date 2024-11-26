@@ -1,3 +1,18 @@
+version 12:
+added log in feature
+
+version 11:
+update some css features.
+
+version 10:
+report tabular form ready, also ready for print.
+
+version 09:
+Summery Report Prepare, filter by date, receiver,
+
+version 08:
+update color pack on ticket.
+
 version 07:
 ticket color print. ok. but if you need to print the background color then
     set the background graphics to print in your printer setting.
